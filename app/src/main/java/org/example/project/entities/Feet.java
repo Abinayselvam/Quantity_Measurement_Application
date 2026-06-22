@@ -11,19 +11,15 @@ public class Feet {
     {
         //same reference
         if (obj == this)
-        {
             return true;
-        }
+
         //null check
         if (obj == null)
-        {
             return false;
-        }
+
         //check different type safe
         if (getClass() != obj.getClass())
-        {
             return false;
-        }
 
         Feet feet1 = (Feet) obj;
         return Double.compare(feet1.value,this.value)==0;
