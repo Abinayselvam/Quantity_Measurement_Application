@@ -1,78 +1,69 @@
-import org.example.project.entities.Feet;
+import org.example.project.Enums.LengthUnit;
+import org.example.project.entities.QuantityLength;
 import org.junit.jupiter.api.Test;
-
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
 public class QuantityMeasurementAppTest {
 
         @Test
-        void givenSameFeetValue_WhenCompared_ShouldReturnTrue() {
-           Feet feet = new Feet(1.0);
-           Feet feet2 = new Feet(1.0);
-           assertTrue(
-                       feet.equals(feet2)
-               );
+        void testEquality_FeetToFeet_SameValue()
+        {
+            assertTrue(new QuantityLength(1, LengthUnit.FEET).equals(new QuantityLength(1,LengthUnit.FEET)));
+        }
+
+       @Test
+       void testEquality_InchesToInches_SameValue() {
+          assertTrue(new QuantityLength(1, LengthUnit.INCHES).equals(new QuantityLength(1,LengthUnit.INCHES)));
        }
 
        @Test
-       void givenDifferentFeetValue_WhenCompared_ShouldReturnFalse() {
-           Feet feet = new Feet(1.0);
-           Feet feet2 = new Feet(2.0);
-           assertFalse(
-                   feet.equals(feet2)
+       void testEquality_FeetToInch_EquivalentValue()
+       {
+           assertTrue(new QuantityLength(1,LengthUnit.FEET).equals(new QuantityLength(12,LengthUnit.INCHES)));
+       }
+
+       @Test
+       void testEquality_InchToFeet_EquivalentValue()
+       {
+           assertTrue(new QuantityLength(12,LengthUnit.INCHES).equals(new QuantityLength(1,LengthUnit.FEET)));
+       }
+
+       @Test
+        void testEquality_InchToInch_DifferentValue() {
+            assertFalse(new QuantityLength(1,LengthUnit.INCHES).equals(new QuantityLength(2,LengthUnit.INCHES)));
+       }
+
+       @Test
+        void testEquality_FeetToFeet_DifferentValue() {
+            assertFalse(new QuantityLength(1,LengthUnit.FEET).equals(new QuantityLength(2,LengthUnit.FEET)));
+       }
+
+       @Test
+       void testEquality_SameReference()
+       {
+           QuantityLength length = new QuantityLength(1,LengthUnit.INCHES);
+           assertTrue(length.equals(length));
+       }
+
+       @Test
+       void testEquality_NullComparison()
+       {
+           QuantityLength length = new QuantityLength(1,LengthUnit.INCHES);
+           assertFalse(length.equals(null));
+       }
+       @Test
+       void testEquality_NullUnit()
+       {
+           assertThrows(
+
+                   IllegalArgumentException.class,
+
+                   () -> new QuantityLength(
+                           1,
+                           null
+                   )
            );
        }
 
-       @Test
-       void givenNull_WhenCompared_ShouldReturnFalse() {
-           Feet feet = new Feet(1.0);
-           assertFalse(feet.equals(null));
-       }
-
-       @Test
-       void givenDifferentDataTypes_WhenCompared_ShouldReturnFalse() {
-           Feet feet = new Feet(1.0);
-           assertFalse(feet.equals("1.0"));
-       }
-
-       @Test
-        void givenSameReference_WhenCompared_ShouldReturnTrue() {
-           Feet feet = new Feet(1.0);
-           assertTrue(feet.equals(feet));
-
-       }
-
-       @Test
-        void givenSameInches_WhenCompared_ShouldReturnTrue() {
-            Feet feet1 = new Feet(1.0);
-            Feet feet2 = new Feet(1.0);
-            assertTrue(feet1.equals(feet2));
-       }
-
-       @Test
-       void givenDifferentInches_WhenCompared_ShouldReturnFalse() {
-            Feet feet1 = new Feet(1.0);
-            Feet feet2 = new Feet(2.0);
-            assertFalse(feet1.equals(feet2));
-       }
-
-       @Test
-       void givenNullInches_WhenCompared_ShouldReturnFalse() {
-            Feet feet = new Feet(1.0);
-            assertFalse(feet.equals(null));
-       }
-
-       @Test
-       void givenDifferentInchesData_WhenCompared_ShouldReturnFalse() {
-            Feet feet1 = new Feet(1.0);
-            assertFalse(feet1.equals("1.0"));
-       }
-
-       @Test
-       void givenSameReferenceInches_WhenCompared_ShouldReturnTrue() {
-            Feet feet1 = new Feet(1.0);
-            assertTrue(feet1.equals(feet1));
-       }
 }

@@ -1,20 +1,13 @@
 package org.example.project.utils;
 
-import org.example.project.entities.Feet;
-import org.example.project.entities.Inch;
+import org.example.project.Enums.LengthUnit;
+import org.example.project.entities.QuantityLength;
 
-public class QuantityCompares {
-    public static boolean feetCompares(double value1,double value2)
-    {
-        Feet feet1 = new Feet(value1);
-        Feet feet2 = new Feet(value2);
-        return feet1.equals(feet2);
-    }
+public  class QuantityCompares {
+    public static boolean compareLength(double value1, LengthUnit unit1, double value2, LengthUnit unit2) {
+        QuantityLength q1 = new QuantityLength(value1,unit1);
+        QuantityLength q2 = new QuantityLength(value2,unit2);
+        return q1.equals(q2);
 
-    public static boolean inchCompares(double value1,double value2)
-    {
-        Inch inch1 = new Inch(value1);
-        Inch inch2 = new Inch(value2);
-        return inch1.equals(inch2);
     }
 }
