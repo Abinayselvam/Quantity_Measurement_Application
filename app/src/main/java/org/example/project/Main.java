@@ -39,25 +39,33 @@ public class Main {
         );
 
         QuantityLength feet =
-                new QuantityLength(1, LengthUnit.FEET);
+                new QuantityLength(
+                        1,
+                        LengthUnit.FEET);
 
         QuantityLength inches =
-                new QuantityLength(12, LengthUnit.INCHES);
+                new QuantityLength(
+                        12,
+                        LengthUnit.INCHES);
 
-        QuantityLength result1 =
-                feet.add(inches, LengthUnit.FEET);
+        System.out.println(
+                feet.convertTo(
+                        LengthUnit.INCHES));
 
-        System.out.println(result1);
+        System.out.println(
+                feet.add(
+                        inches,
+                        LengthUnit.FEET));
 
-        QuantityLength result2 =
-                feet.add(inches, LengthUnit.INCHES);
+        System.out.println(
+                new QuantityLength(
+                        36,
+                        LengthUnit.INCHES)
+                        .equals(
+                                new QuantityLength(
+                                        1,
+                                        LengthUnit.YARDS)));
 
-        System.out.println(result2);
-
-        QuantityLength result3 =
-                feet.add(inches, LengthUnit.YARDS);
-
-        System.out.println(result3);
     }
 }
 
