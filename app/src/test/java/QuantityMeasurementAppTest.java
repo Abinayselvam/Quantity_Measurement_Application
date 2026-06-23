@@ -5,6 +5,23 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class QuantityMeasurementAppTest {
+         //Yard to Yard
+          @Test
+          void testEquality_YardToYard_SameValue()
+          {
+                QuantityLength  q1 = new QuantityLength(1,LengthUnit.YARDS);
+                QuantityLength  q2 = new QuantityLength(1,LengthUnit.YARDS);
+                assertEquals( q1, q2 );
+          }
+
+        //Different values
+        @Test
+        void testEquality_YardToFeet_NonEquivalentValue()
+        {
+            QuantityLength  yard = new QuantityLength(1,LengthUnit.YARDS);
+            QuantityLength feet = new QuantityLength(2,LengthUnit.FEET);
+            assertNotEquals( yard, feet );
+        }
 
         @Test
         void testEquality_FeetToFeet_SameValue()

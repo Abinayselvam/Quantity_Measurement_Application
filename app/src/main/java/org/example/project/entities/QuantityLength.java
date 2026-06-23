@@ -36,4 +36,8 @@ public class QuantityLength {
     public int hashCode() {
         return Objects.hash(convertToFeet());
     }
+    @Override
+    public String toString() {
+        return value + " " + unit;
+    }
 }
