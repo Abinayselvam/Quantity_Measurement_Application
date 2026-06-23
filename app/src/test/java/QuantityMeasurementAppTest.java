@@ -1,13 +1,95 @@
 
 import org.example.project.Enums.LengthUnit;
+import org.example.project.Enums.WeightUnit;
 import org.example.project.entities.QuantityLength;
-import org.example.project.utils.QuantityCompares;
+import org.example.project.entities.QuantityWeight;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 
 public class QuantityMeasurementAppTest {
 
+    @Test
+    void testNaNValue() {
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new QuantityWeight(
+                        Double.NaN,
+                        WeightUnit.KILOGRAM)
+        );
+    }
+    @Test
+    void testNullUnit() {
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new QuantityWeight(1, null)
+        );
+    }
+    @Test
+    void testWeightVsLength() {
+
+        QuantityWeight weight =
+                new QuantityWeight(1, WeightUnit.KILOGRAM);
+
+        QuantityLength length =
+                new QuantityLength(1, LengthUnit.FEET);
+
+        assertFalse(weight.equals(length));
+    }
+    @Test
+    void testAddition_TargetUnit_Gram() {
+
+        QuantityWeight result =
+                new QuantityWeight(1, WeightUnit.KILOGRAM)
+                        .add(
+                                new QuantityWeight(1000, WeightUnit.GRAM),
+                                WeightUnit.GRAM
+                        );
+
+        assertEquals(
+                2000,
+                result.getValue(),
+                0.001
+        );
+    }
+    @Test
+    void testAddition_KgPlusGram() {
+
+        QuantityWeight result =
+                new QuantityWeight(1, WeightUnit.KILOGRAM)
+                        .add(
+                                new QuantityWeight(1000, WeightUnit.GRAM)
+                        );
+
+        assertEquals(
+                2.0,
+                result.getValue(),
+                0.001
+        );
+    }
+    @Test
+    void testConversion_PoundToKilogram() {
+
+        QuantityWeight result =
+                new QuantityWeight(2.20462, WeightUnit.POUND)
+                        .convertTo(WeightUnit.KILOGRAM);
+
+        assertEquals(
+                1.0,
+                result.getValue(),
+                0.001
+        );
+    }
+    @Test
+    void testEquality_KgToGram() {
+        assertTrue(
+                new QuantityWeight(1, WeightUnit.KILOGRAM)
+                        .equals(
+                                new QuantityWeight(1000, WeightUnit.GRAM)
+                        ));
+    }
     @Test
     void testAddition_ExplicitTargetUnit_Commutativity() {
 
