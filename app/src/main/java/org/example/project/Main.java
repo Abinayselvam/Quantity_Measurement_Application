@@ -38,44 +38,26 @@ public class Main {
                 LengthUnit.FEET
         );
 
-        System.out.println("===== UC6 Addition =====");
+        QuantityLength feet =
+                new QuantityLength(1, LengthUnit.FEET);
 
-        switch (1) {
+        QuantityLength inches =
+                new QuantityLength(12, LengthUnit.INCHES);
 
-            case 1:
+        QuantityLength result1 =
+                feet.add(inches, LengthUnit.FEET);
 
-                QuantityLength feet =
-                        new QuantityLength(1, LengthUnit.FEET);
+        System.out.println(result1);
 
-                QuantityLength inches =
-                        new QuantityLength(12, LengthUnit.INCHES);
+        QuantityLength result2 =
+                feet.add(inches, LengthUnit.INCHES);
 
-                QuantityLength result =
-                        feet.add(inches);
+        System.out.println(result2);
 
-                System.out.println(
-                        feet + " + " + inches +
-                                " = " + result);
+        QuantityLength result3 =
+                feet.add(inches, LengthUnit.YARDS);
 
-                break;
-
-            case 2:
-
-                QuantityLength yard =
-                        new QuantityLength(1, LengthUnit.YARDS);
-
-                QuantityLength feet2 =
-                        new QuantityLength(3, LengthUnit.FEET);
-
-                System.out.println(
-                        yard.add(feet2));
-
-                break;
-
-            default:
-                System.out.println("Invalid option");
-        }
-
+        System.out.println(result3);
     }
 }
 
