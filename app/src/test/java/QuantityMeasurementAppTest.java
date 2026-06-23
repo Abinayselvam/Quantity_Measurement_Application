@@ -9,6 +9,55 @@ import static org.junit.jupiter.api.Assertions.*;
 public class QuantityMeasurementAppTest {
 
     @Test
+    void testAddition_ExplicitTargetUnit_Commutativity() {
+
+        QuantityLength first =
+                new QuantityLength(1, LengthUnit.FEET);
+
+        QuantityLength second =
+                new QuantityLength(12, LengthUnit.INCHES);
+
+        QuantityLength result1 =
+                first.add(second, LengthUnit.YARDS);
+
+        QuantityLength result2 =
+                second.add(first, LengthUnit.YARDS);
+
+        assertEquals(result1, result2);
+    }
+    @Test
+    void testAddition_ExplicitTargetUnit_Inches() {
+
+        QuantityLength first =
+                new QuantityLength(1, LengthUnit.FEET);
+
+        QuantityLength second =
+                new QuantityLength(12, LengthUnit.INCHES);
+
+        QuantityLength result =
+                first.add(second, LengthUnit.INCHES);
+
+        assertEquals(
+                new QuantityLength(24, LengthUnit.INCHES),
+                result);
+    }
+    @Test
+    void testAddition_ExplicitTargetUnit_Feet() {
+
+        QuantityLength first =
+                new QuantityLength(1, LengthUnit.FEET);
+
+        QuantityLength second =
+                new QuantityLength(12, LengthUnit.INCHES);
+
+        QuantityLength result =
+                first.add(second, LengthUnit.FEET);
+
+        assertEquals(
+                new QuantityLength(2, LengthUnit.FEET),
+                result);
+    }
+    @Test
     void testAddition_SameUnit_FeetPlusFeet()
     {
         QuantityLength first = new QuantityLength(1, LengthUnit.FEET);

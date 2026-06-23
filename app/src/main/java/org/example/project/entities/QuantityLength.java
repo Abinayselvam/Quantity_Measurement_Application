@@ -80,6 +80,24 @@ public class QuantityLength {
 
         return new QuantityLength(result, this.unit);
     }
+    public QuantityLength add(
+            QuantityLength other,
+            LengthUnit targetUnit) {
+
+        if (other == null)
+            throw new IllegalArgumentException("Length cannot be null");
+
+        if (targetUnit == null)
+            throw new IllegalArgumentException("Target unit cannot be null");
+
+        double totalFeet =
+                this.convertToBaseUnit() + other.convertToBaseUnit();
+
+        double result =
+                totalFeet / targetUnit.getConversionFactor();
+
+        return new QuantityLength(result, targetUnit);
+    }
 
     @Override
     public boolean equals(Object obj) {
