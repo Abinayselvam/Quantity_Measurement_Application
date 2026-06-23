@@ -61,6 +61,25 @@ public class QuantityLength {
                 targetUnit
         );
     }
+    public QuantityLength add(QuantityLength other) {
+
+        if (other == null) {
+            throw new IllegalArgumentException("Other quantity cannot be null");
+        }
+
+        double firstBase =
+                this.value * this.unit.getConversionFactor();
+
+        double secondBase =
+                other.value * other.unit.getConversionFactor();
+
+        double sumBase = firstBase + secondBase;
+
+        double result =
+                sumBase / this.unit.getConversionFactor();
+
+        return new QuantityLength(result, this.unit);
+    }
 
     @Override
     public boolean equals(Object obj) {
