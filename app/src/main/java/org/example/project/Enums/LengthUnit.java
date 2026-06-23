@@ -1,8 +1,10 @@
 package org.example.project.Enums;
 
 public enum LengthUnit {
+    FEET(1.0),
     INCHES(1.0/12),
-    FEET(1.0);
+    YARDS(3.0),
+    CENTIMETERS(0.393701/12);
     private final double conversionFactor;
      LengthUnit(double conversionFactor)
     {
