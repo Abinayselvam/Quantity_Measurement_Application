@@ -1,4 +1,4 @@
-package org.example.project.utils;
+package org.example.project.entities;
 import org.example.project.Interface.IMeasurable;
 
 import java.util.Objects;
