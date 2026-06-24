@@ -34,4 +34,22 @@ public class QuantityMeasurementApp {
                         + " = "
                         + q1.add(q2, targetUnit));
     }
+    public static <U extends IMeasurable>
+    void demonstrateSubtraction(
+            Quantity<U> q1,
+            Quantity<U> q2,
+            U targetUnit) {
+
+        System.out.println(
+                q1.subtract(q2, targetUnit));
+    }
+    public static <U extends IMeasurable>
+    void demonstrateDivision(
+            Quantity<U> q1,
+            Quantity<U> q2) {
+
+        System.out.println(
+                q1.divide(q2));
+    }
+
 }
