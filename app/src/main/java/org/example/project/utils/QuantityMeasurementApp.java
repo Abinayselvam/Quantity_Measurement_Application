@@ -1,8 +1,7 @@
 package org.example.project.utils;
-
-import org.example.project.Enums.WeightUnit;
 import org.example.project.Interface.IMeasurable;
-import org.example.project.entities.QuantityWeight;
+import org.example.project.entities.Quantity;
+
 public class QuantityMeasurementApp {
 
     public static <U extends IMeasurable>

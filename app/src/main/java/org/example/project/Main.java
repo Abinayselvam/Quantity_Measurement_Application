@@ -1,40 +1,12 @@
 package org.example.project;
 import org.example.project.Enums.LengthUnit;
+import org.example.project.Enums.VolumeUnit;
 import org.example.project.Enums.WeightUnit;
-import org.example.project.entities.QuantityLength;
-import org.example.project.utils.Quantity;
+import org.example.project.entities.Quantity;
 import static org.example.project.utils.QuantityMeasurementApp.*;
 
 public class Main {
     public static void main(String[] args) {
-
-        QuantityLength feet =
-                new QuantityLength(
-                        1,
-                        LengthUnit.FEET);
-
-        QuantityLength inches =
-                new QuantityLength(
-                        12,
-                        LengthUnit.INCHES);
-
-        System.out.println(
-                feet.convertTo(
-                        LengthUnit.INCHES));
-
-        System.out.println(
-                feet.add(
-                        inches,
-                        LengthUnit.FEET));
-
-        System.out.println(
-                new QuantityLength(
-                        36,
-                        LengthUnit.INCHES)
-                        .equals(
-                                new QuantityLength(
-                                        1,
-                                        LengthUnit.YARDS)));
 
         Quantity<LengthUnit> length1 =
                 new Quantity<>(1, LengthUnit.FEET);
@@ -43,7 +15,6 @@ public class Main {
                 new Quantity<>(12, LengthUnit.INCHES);
 
         demonstrateEquality(length1, length2);
-
         demonstrateConversion(
                 length1,
                 LengthUnit.INCHES);
@@ -69,6 +40,33 @@ public class Main {
                 weight1,
                 weight2,
                 WeightUnit.KILOGRAM);
+
+        Quantity<VolumeUnit> litre =
+                new Quantity<>(1.0, VolumeUnit.LITRE);
+
+        Quantity<VolumeUnit> milliLitre =
+                new Quantity<>(1000.0, VolumeUnit.MILLILITRE);
+
+        Quantity<VolumeUnit> gallon =
+                new Quantity<>(1.0, VolumeUnit.GALLON);
+
+        System.out.println("=== Volume Equality ===");
+        System.out.println(litre.equals(milliLitre));
+
+        System.out.println("\n=== Volume Conversion ===");
+        System.out.println(
+                litre.convertTo(VolumeUnit.MILLILITRE));
+
+        System.out.println(
+                gallon.convertTo(VolumeUnit.LITRE));
+
+        System.out.println("\n=== Volume Addition ===");
+        System.out.println(
+                litre.add(milliLitre));
+
+        System.out.println(
+                litre.add(gallon,
+                        VolumeUnit.LITRE));
 
 
     }
