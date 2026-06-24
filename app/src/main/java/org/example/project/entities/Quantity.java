@@ -34,15 +34,27 @@ public final class Quantity<U extends IMeasurable> {
     public Quantity<U> convertTo(U targetUnit) {
 
         if (targetUnit == null) {
-            throw new IllegalArgumentException("Target unit cannot be null");
+            throw new IllegalArgumentException(
+                    "Target unit cannot be null");
         }
 
-        double baseValue = unit.convertToBaseUnit(value);
+        if (!unit.getClass()
+                .equals(targetUnit.getClass())) {
 
-        double converted =
+            throw new IllegalArgumentException(
+                    "Cannot convert between different measurement categories");
+        }
+
+        double baseValue =
+                unit.convertToBaseUnit(value);
+
+        double convertedValue =
                 targetUnit.convertFromBaseUnit(baseValue);
 
-        return new Quantity<>(round(converted), targetUnit);
+        return new Quantity<>(
+                round(convertedValue),
+                targetUnit
+        );
     }
 
     private double round(double value) {
@@ -81,13 +93,22 @@ public final class Quantity<U extends IMeasurable> {
             Quantity<U> other,
             ArithmeticOperation operation) {
 
+        unit.validateOperationSupport(
+                operation.name());
+
+        other.unit.validateOperationSupport(
+                operation.name());
+
         double thisBase =
                 unit.convertToBaseUnit(value);
 
         double otherBase =
-                other.unit.convertToBaseUnit(other.value);
+                other.unit.convertToBaseUnit(
+                        other.value);
 
-        return operation.compute(thisBase, otherBase);
+        return operation.compute(
+                thisBase,
+                otherBase);
     }
     public Quantity<U> add(Quantity<U> other) {
 
