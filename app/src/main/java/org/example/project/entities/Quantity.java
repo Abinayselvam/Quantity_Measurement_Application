@@ -1,12 +1,10 @@
 package org.example.project.entities;
 import org.example.project.Interface.IMeasurable;
-
 import java.util.Objects;
 
 public final class Quantity<U extends IMeasurable> {
 
     private static final double EPSILON = 0.000001;
-
     private final double value;
     private final U unit;
 
@@ -69,6 +67,75 @@ public final class Quantity<U extends IMeasurable> {
 
         return new Quantity<>(round(result), targetUnit);
     }
+    public Quantity<U> subtract(Quantity<U> other) {
+
+        if (other == null) {
+            throw new IllegalArgumentException("Quantity cannot be null");
+        }
+
+        double thisBase =
+                unit.convertToBaseUnit(value);
+
+        double otherBase =
+                other.unit.convertToBaseUnit(other.value);
+
+        double resultBase =
+                thisBase - otherBase;
+
+        double result =
+                unit.convertFromBaseUnit(resultBase);
+
+        return new Quantity<>(
+                round(result),
+                unit);
+    }
+    public Quantity<U> subtract(
+            Quantity<U> other,
+            U targetUnit) {
+
+        if (other == null) {
+            throw new IllegalArgumentException("Quantity cannot be null");
+        }
+
+        if (targetUnit == null) {
+            throw new IllegalArgumentException("Target unit cannot be null");
+        }
+
+        double thisBase =
+                unit.convertToBaseUnit(value);
+
+        double otherBase =
+                other.unit.convertToBaseUnit(other.value);
+
+        double resultBase =
+                thisBase - otherBase;
+
+        double result =
+                targetUnit.convertFromBaseUnit(resultBase);
+
+        return new Quantity<>(
+                round(result),
+                targetUnit);
+    }
+    public double divide(Quantity<U> other) {
+
+        if (other == null) {
+            throw new IllegalArgumentException("Quantity cannot be null");
+        }
+
+        double thisBase =
+                unit.convertToBaseUnit(value);
+
+        double otherBase =
+                other.unit.convertToBaseUnit(other.value);
+
+        if (otherBase == 0) {
+            throw new ArithmeticException(
+                    "Division by zero");
+        }
+
+        return round(thisBase / otherBase);
+    }
 
     private double round(double value) {
         return Math.round(value * 100.0) / 100.0;
@@ -109,6 +176,7 @@ public final class Quantity<U extends IMeasurable> {
                 Math.round(baseValue / EPSILON)
         );
     }
+
 
     @Override
     public String toString() {

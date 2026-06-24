@@ -68,7 +68,42 @@ public class Main {
                 litre.add(gallon,
                         VolumeUnit.LITRE));
 
+        Quantity<LengthUnit> foot =
+                new Quantity<>(2.0, LengthUnit.FEET);
 
+        Quantity<LengthUnit> inches =
+                new Quantity<>(12.0, LengthUnit.INCHES);
+        demonstrateSubtraction(
+                foot,
+                inches,
+                LengthUnit.FEET);
+        demonstrateDivision(
+                foot,
+                inches);
+        Quantity<WeightUnit> kg =
+                new Quantity<>(2.0, WeightUnit.KILOGRAM);
+
+        Quantity<WeightUnit> gram =
+                new Quantity<>(1000.0, WeightUnit.GRAM);
+        demonstrateSubtraction(
+                kg,
+                gram,
+                WeightUnit.KILOGRAM);
+        demonstrateDivision(
+                kg,
+                gram);
+        Quantity<VolumeUnit> litre1 =
+                new Quantity<>(2.0, VolumeUnit.LITRE);
+
+        Quantity<VolumeUnit> ml =
+                new Quantity<>(1000.0, VolumeUnit.MILLILITRE);
+        demonstrateSubtraction(
+                litre,
+                ml,
+                VolumeUnit.LITRE);
+        demonstrateDivision(
+                litre1,
+                ml);
     }
 }
 
