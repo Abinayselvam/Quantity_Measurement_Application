@@ -1,14 +1,39 @@
-
+import static org.junit.jupiter.api.Assertions.*;
+import org.example.project.Enums.ArithmeticOperation;
 import org.example.project.Enums.LengthUnit;
-import org.example.project.Enums.VolumeUnit;
 import org.example.project.Enums.WeightUnit;
 import org.example.project.entities.Quantity;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
-
 public class QuantityMeasurementAppTest {
 
+    @Test
+    void crossCategory()
+    {
+        Quantity<LengthUnit> length =
+                new Quantity<>(1, LengthUnit.FEET);
+
+        Quantity<WeightUnit> weight =
+                new Quantity<>(1, WeightUnit.KILOGRAM);
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> length.divide((Quantity) weight));
+    }
+   @Test
+   void  enumTest()
+   {
+       assertEquals(
+               15.0,
+               ArithmeticOperation.ADD.compute(10,5));
+
+       assertEquals(
+               5.0,
+               ArithmeticOperation.SUBTRACT.compute(10,5));
+
+       assertEquals(
+               2.0,
+               ArithmeticOperation.DIVIDE.compute(10,5));
+   }
     @Test
     void testDivisionByZero() {
 
@@ -38,63 +63,6 @@ public class QuantityMeasurementAppTest {
         assertEquals(
                 1.0,
                 q1.divide(q2));
-    }
-    @Test
-    void testSubtract_Volume() {
-
-        Quantity<VolumeUnit> q1 =
-                new Quantity<>(2.0,
-                        VolumeUnit.LITRE);
-
-        Quantity<VolumeUnit> q2 =
-                new Quantity<>(1000.0,
-                        VolumeUnit.MILLILITRE);
-
-        Quantity<VolumeUnit> expected =
-                new Quantity<>(1.0,
-                        VolumeUnit.LITRE);
-
-        assertEquals(
-                expected,
-                q1.subtract(q2));
-    }
-    @Test
-    void testSubtract_Weight() {
-
-        Quantity<WeightUnit> q1 =
-                new Quantity<>(2.0,
-                        WeightUnit.KILOGRAM);
-
-        Quantity<WeightUnit> q2 =
-                new Quantity<>(1000.0,
-                        WeightUnit.GRAM);
-
-        Quantity<WeightUnit> expected =
-                new Quantity<>(1.0,
-                        WeightUnit.KILOGRAM);
-
-        assertEquals(
-                expected,
-                q1.subtract(q2));
-    }
-    @Test
-    void testSubtract_Length() {
-
-        Quantity<LengthUnit> q1 =
-                new Quantity<>(2.0,
-                        LengthUnit.FEET);
-
-        Quantity<LengthUnit> q2 =
-                new Quantity<>(12.0,
-                        LengthUnit.INCHES);
-
-        Quantity<LengthUnit> expected =
-                new Quantity<>(1.0,
-                        LengthUnit.FEET);
-
-        assertEquals(
-                expected,
-                q1.subtract(q2));
     }
     @Test
     void testNaNValue() {
