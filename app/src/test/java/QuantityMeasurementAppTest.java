@@ -1,11 +1,72 @@
 import static org.junit.jupiter.api.Assertions.*;
 import org.example.project.Enums.ArithmeticOperation;
 import org.example.project.Enums.LengthUnit;
+import org.example.project.Enums.TemperatureUnit;
 import org.example.project.Enums.WeightUnit;
 import org.example.project.entities.Quantity;
 import org.junit.jupiter.api.Test;
 public class QuantityMeasurementAppTest {
 
+
+    @Test
+    void testTemperatureEquality_CelsiusToFahrenheit() {
+
+        Quantity<TemperatureUnit> celsius =
+                new Quantity<>(0.0,
+                        TemperatureUnit.CELSIUS);
+
+        Quantity<TemperatureUnit> fahrenheit =
+                new Quantity<>(32.0,
+                        TemperatureUnit.FAHRENHEIT);
+
+        assertTrue(
+                celsius.equals(fahrenheit));
+    }
+    @Test
+    void testTemperatureConversion() {
+
+        Quantity<TemperatureUnit> celsius =
+                new Quantity<>(100.0,
+                        TemperatureUnit.CELSIUS);
+
+        Quantity<TemperatureUnit> result =
+                celsius.convertTo(
+                        TemperatureUnit.FAHRENHEIT);
+
+        assertEquals(
+                212.0,
+                result.getValue(),
+                0.01);
+    }
+    @Test
+    void testTemperatureAddThrowsException() {
+
+        Quantity<TemperatureUnit> t1 =
+                new Quantity<>(100.0,
+                        TemperatureUnit.CELSIUS);
+
+        Quantity<TemperatureUnit> t2 =
+                new Quantity<>(50.0,
+                        TemperatureUnit.CELSIUS);
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> t1.add(t2));
+    }
+
+    @Test
+    void testTemperatureDivideThrowsException() {
+        Quantity<TemperatureUnit> t1 =
+                new Quantity<>(100.0,
+                        TemperatureUnit.CELSIUS);
+
+        Quantity<TemperatureUnit> t2 =
+                new Quantity<>(50.0,
+                        TemperatureUnit.CELSIUS);
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> t1.divide(t2));
+    }
     @Test
     void crossCategory()
     {

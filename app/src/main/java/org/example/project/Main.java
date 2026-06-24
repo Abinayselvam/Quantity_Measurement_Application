@@ -1,109 +1,187 @@
 package org.example.project;
-import org.example.project.Enums.LengthUnit;
-import org.example.project.Enums.VolumeUnit;
-import org.example.project.Enums.WeightUnit;
+
+import org.example.project.Enums.*;
 import org.example.project.entities.Quantity;
-import static org.example.project.utils.QuantityMeasurementApp.*;
+
+import java.util.Scanner;
 
 public class Main {
+
+    private static final Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
 
-        Quantity<LengthUnit> length1 =
-                new Quantity<>(1, LengthUnit.FEET);
+        while (true) {
 
-        Quantity<LengthUnit> length2 =
-                new Quantity<>(12, LengthUnit.INCHES);
+            System.out.println("\n===== QUANTITY MEASUREMENT SYSTEM =====");
+            System.out.println("1. Length Operations");
+            System.out.println("2. Weight Operations");
+            System.out.println("3. Volume Operations");
+            System.out.println("4. Temperature Operations");
+            System.out.println("5. Exit");
 
-        demonstrateEquality(length1, length2);
-        demonstrateConversion(
-                length1,
-                LengthUnit.INCHES);
+            System.out.print("Enter choice: ");
+            int choice = scanner.nextInt();
 
-        demonstrateAddition(
-                length1,
-                length2,
-                LengthUnit.FEET);
+            switch (choice) {
 
-        Quantity<WeightUnit> weight1 =
-                new Quantity<>(1, WeightUnit.KILOGRAM);
+                case 1:
+                    performLengthOperations();
+                    break;
 
-        Quantity<WeightUnit> weight2 =
-                new Quantity<>(1000, WeightUnit.GRAM);
+                case 2:
+                    performWeightOperations();
+                    break;
 
-        demonstrateEquality(weight1, weight2);
+                case 3:
+                    performVolumeOperations();
+                    break;
 
-        demonstrateConversion(
-                weight1,
-                WeightUnit.GRAM);
+                case 4:
+                    performTemperatureOperations();
+                    break;
 
-        demonstrateAddition(
-                weight1,
-                weight2,
-                WeightUnit.KILOGRAM);
+                case 5:
+                    System.out.println("Exiting Application...");
+                    System.exit(0);
 
-        Quantity<VolumeUnit> litre =
-                new Quantity<>(1.0, VolumeUnit.LITRE);
+                default:
+                    System.out.println("Invalid Choice");
+            }
+        }
+    }
 
-        Quantity<VolumeUnit> milliLitre =
-                new Quantity<>(1000.0, VolumeUnit.MILLILITRE);
+    private static void performLengthOperations() {
 
-        Quantity<VolumeUnit> gallon =
-                new Quantity<>(1.0, VolumeUnit.GALLON);
-
-        System.out.println("=== Volume Equality ===");
-        System.out.println(litre.equals(milliLitre));
-
-        System.out.println("\n=== Volume Conversion ===");
-        System.out.println(
-                litre.convertTo(VolumeUnit.MILLILITRE));
-
-        System.out.println(
-                gallon.convertTo(VolumeUnit.LITRE));
-
-        System.out.println("\n=== Volume Addition ===");
-        System.out.println(
-                litre.add(milliLitre));
-
-        System.out.println(
-                litre.add(gallon,
-                        VolumeUnit.LITRE));
-
-        Quantity<LengthUnit> foot =
+        Quantity<LengthUnit> feet =
                 new Quantity<>(2.0, LengthUnit.FEET);
 
         Quantity<LengthUnit> inches =
                 new Quantity<>(12.0, LengthUnit.INCHES);
-        demonstrateSubtraction(
-                foot,
-                inches,
-                LengthUnit.FEET);
-        demonstrateDivision(
-                foot,
-                inches);
+
+        System.out.println("\n=== LENGTH OPERATIONS ===");
+
+        System.out.println("Equality: "
+                + feet.equals(inches));
+
+        System.out.println("Conversion: "
+                + feet.convertTo(LengthUnit.INCHES));
+
+        System.out.println("Addition: "
+                + feet.add(inches));
+
+        System.out.println("Subtraction: "
+                + feet.subtract(inches,LengthUnit.INCHES));
+
+        System.out.println("Division: "
+                + feet.divide(inches));
+    }
+
+    private static void performWeightOperations() {
+
         Quantity<WeightUnit> kg =
                 new Quantity<>(2.0, WeightUnit.KILOGRAM);
 
         Quantity<WeightUnit> gram =
                 new Quantity<>(1000.0, WeightUnit.GRAM);
-        demonstrateSubtraction(
-                kg,
-                gram,
-                WeightUnit.KILOGRAM);
-        demonstrateDivision(
-                kg,
-                gram);
-        Quantity<VolumeUnit> litre1 =
+
+        System.out.println("\n=== WEIGHT OPERATIONS ===");
+
+        System.out.println("Equality: "
+                + kg.equals(gram));
+
+        System.out.println("Conversion: "
+                + kg.convertTo(WeightUnit.GRAM));
+
+        System.out.println("Addition: "
+                + kg.add(gram));
+
+        System.out.println("Subtraction: "
+                + kg.subtract(gram,WeightUnit.GRAM));
+
+        System.out.println("Division: "
+                + kg.divide(gram));
+    }
+
+    private static void performVolumeOperations() {
+
+        Quantity<VolumeUnit> litre =
                 new Quantity<>(2.0, VolumeUnit.LITRE);
 
         Quantity<VolumeUnit> ml =
                 new Quantity<>(1000.0, VolumeUnit.MILLILITRE);
-        demonstrateSubtraction(
-                litre,
-                ml,
-                VolumeUnit.LITRE);
-        demonstrateDivision(
-                litre1,
-                ml);
+
+        System.out.println("\n=== VOLUME OPERATIONS ===");
+
+        System.out.println("Equality: "
+                + litre.equals(ml));
+
+        System.out.println("Conversion: "
+                + litre.convertTo(VolumeUnit.MILLILITRE));
+
+        System.out.println("Addition: "
+                + litre.add(ml));
+
+        System.out.println("Subtraction: "
+                + litre.subtract(ml,VolumeUnit.MILLILITRE));
+
+        System.out.println("Division: "
+                + litre.divide(ml));
+    }
+
+    private static void performTemperatureOperations() {
+
+        Quantity<TemperatureUnit> celsius =
+                new Quantity<>(0.0,
+                        TemperatureUnit.CELSIUS);
+
+        Quantity<TemperatureUnit> fahrenheit =
+                new Quantity<>(32.0,
+                        TemperatureUnit.FAHRENHEIT);
+
+        System.out.println("\n=== TEMPERATURE OPERATIONS ===");
+
+        System.out.println("Equality: "
+                + celsius.equals(fahrenheit));
+
+        System.out.println("Conversion: "
+                + celsius.convertTo(
+                TemperatureUnit.FAHRENHEIT));
+
+        try {
+
+            System.out.println(
+                    celsius.add(fahrenheit));
+
+        } catch (Exception e) {
+
+            System.out.println(
+                    "Addition Not Supported : "
+                            + e.getMessage());
+        }
+
+        try {
+
+            System.out.println(
+                    celsius.subtract(fahrenheit,TemperatureUnit.CELSIUS));
+
+        } catch (Exception e) {
+
+            System.out.println(
+                    "Subtraction Not Supported : "
+                            + e.getMessage());
+        }
+
+        try {
+
+            System.out.println(
+                    celsius.divide(fahrenheit));
+
+        } catch (Exception e) {
+
+            System.out.println(
+                    "Division Not Supported : "
+                            + e.getMessage());
+        }
     }
 }
-
