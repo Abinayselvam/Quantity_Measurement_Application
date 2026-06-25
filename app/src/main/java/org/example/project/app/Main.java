@@ -2,6 +2,7 @@ package org.example.project.app;
 import org.example.project.Enums.*;
 import org.example.project.controller.QuantityMeasurementController;
 import org.example.project.dto.QuantityDTO;
+import org.example.project.factory.QuantityMeasurementFactory;
 import org.example.project.repository.IQuantityMeasurementRepository;
 import org.example.project.repository.QuantityMeasurementCacheRepository;
 import org.example.project.service.IQuantityMeasurementService;
@@ -14,14 +15,9 @@ public class Main {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        IQuantityMeasurementRepository repository =
-                QuantityMeasurementCacheRepository.getInstance();
-
-        IQuantityMeasurementService service =
-                new QuantityMeasurementServiceImpl(repository);
-
         QuantityMeasurementController controller =
-                new QuantityMeasurementController(service);
+                QuantityMeasurementFactory
+                        .createController();
 
         QuantityDTO length1 =
                 new QuantityDTO(

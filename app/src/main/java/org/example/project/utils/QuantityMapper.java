@@ -1,4 +1,4 @@
-package org.example.project.mapper;
+package org.example.project.utils;
 import org.example.project.Enums.*;
 import org.example.project.Interface.IMeasurable;
 import org.example.project.dto.QuantityDTO;
