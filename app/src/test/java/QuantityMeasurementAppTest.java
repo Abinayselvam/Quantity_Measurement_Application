@@ -3,7 +3,7 @@ import org.example.project.Enums.ArithmeticOperation;
 import org.example.project.Enums.LengthUnit;
 import org.example.project.Enums.TemperatureUnit;
 import org.example.project.Enums.WeightUnit;
-import org.example.project.entities.Quantity;
+import org.example.project.model.QuantityModel;
 import org.junit.jupiter.api.Test;
 public class QuantityMeasurementAppTest {
 
@@ -11,12 +11,12 @@ public class QuantityMeasurementAppTest {
     @Test
     void testTemperatureEquality_CelsiusToFahrenheit() {
 
-        Quantity<TemperatureUnit> celsius =
-                new Quantity<>(0.0,
+        QuantityModel<TemperatureUnit> celsius =
+                new QuantityModel<>(0.0,
                         TemperatureUnit.CELSIUS);
 
-        Quantity<TemperatureUnit> fahrenheit =
-                new Quantity<>(32.0,
+        QuantityModel<TemperatureUnit> fahrenheit =
+                new QuantityModel<>(32.0,
                         TemperatureUnit.FAHRENHEIT);
 
         assertTrue(
@@ -25,11 +25,11 @@ public class QuantityMeasurementAppTest {
     @Test
     void testTemperatureConversion() {
 
-        Quantity<TemperatureUnit> celsius =
-                new Quantity<>(100.0,
+        QuantityModel<TemperatureUnit> celsius =
+                new QuantityModel<>(100.0,
                         TemperatureUnit.CELSIUS);
 
-        Quantity<TemperatureUnit> result =
+        QuantityModel<TemperatureUnit> result =
                 celsius.convertTo(
                         TemperatureUnit.FAHRENHEIT);
 
@@ -41,12 +41,12 @@ public class QuantityMeasurementAppTest {
     @Test
     void testTemperatureAddThrowsException() {
 
-        Quantity<TemperatureUnit> t1 =
-                new Quantity<>(100.0,
+        QuantityModel<TemperatureUnit> t1 =
+                new QuantityModel<>(100.0,
                         TemperatureUnit.CELSIUS);
 
-        Quantity<TemperatureUnit> t2 =
-                new Quantity<>(50.0,
+        QuantityModel<TemperatureUnit> t2 =
+                new QuantityModel<>(50.0,
                         TemperatureUnit.CELSIUS);
 
         assertThrows(
@@ -56,12 +56,12 @@ public class QuantityMeasurementAppTest {
 
     @Test
     void testTemperatureDivideThrowsException() {
-        Quantity<TemperatureUnit> t1 =
-                new Quantity<>(100.0,
+        QuantityModel<TemperatureUnit> t1 =
+                new QuantityModel<>(100.0,
                         TemperatureUnit.CELSIUS);
 
-        Quantity<TemperatureUnit> t2 =
-                new Quantity<>(50.0,
+        QuantityModel<TemperatureUnit> t2 =
+                new QuantityModel<>(50.0,
                         TemperatureUnit.CELSIUS);
         assertThrows(
                 UnsupportedOperationException.class,
@@ -70,15 +70,15 @@ public class QuantityMeasurementAppTest {
     @Test
     void crossCategory()
     {
-        Quantity<LengthUnit> length =
-                new Quantity<>(1, LengthUnit.FEET);
+        QuantityModel<LengthUnit> length =
+                new QuantityModel<>(1, LengthUnit.FEET);
 
-        Quantity<WeightUnit> weight =
-                new Quantity<>(1, WeightUnit.KILOGRAM);
+        QuantityModel<WeightUnit> weight =
+                new QuantityModel<>(1, WeightUnit.KILOGRAM);
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> length.divide((Quantity) weight));
+                () -> length.divide((QuantityModel) weight));
     }
    @Test
    void  enumTest()
@@ -98,12 +98,12 @@ public class QuantityMeasurementAppTest {
     @Test
     void testDivisionByZero() {
 
-        Quantity<LengthUnit> q1 =
-                new Quantity<>(1.0,
+        QuantityModel<LengthUnit> q1 =
+                new QuantityModel<>(1.0,
                         LengthUnit.FEET);
 
-        Quantity<LengthUnit> q2 =
-                new Quantity<>(0.0,
+        QuantityModel<LengthUnit> q2 =
+                new QuantityModel<>(0.0,
                         LengthUnit.INCHES);
 
         assertThrows(
@@ -113,12 +113,12 @@ public class QuantityMeasurementAppTest {
     @Test
     void testDivision_Length() {
 
-        Quantity<LengthUnit> q1 =
-                new Quantity<>(2.0,
+        QuantityModel<LengthUnit> q1 =
+                new QuantityModel<>(2.0,
                         LengthUnit.FEET);
 
-        Quantity<LengthUnit> q2 =
-                new Quantity<>(24.0,
+        QuantityModel<LengthUnit> q2 =
+                new QuantityModel<>(24.0,
                         LengthUnit.INCHES);
 
         assertEquals(
@@ -130,7 +130,7 @@ public class QuantityMeasurementAppTest {
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new Quantity<WeightUnit>(
+                () -> new QuantityModel<WeightUnit>(
                         Double.NaN,
                         WeightUnit.KILOGRAM)
         );
@@ -140,27 +140,27 @@ public class QuantityMeasurementAppTest {
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new Quantity<WeightUnit>(1, null)
+                () -> new QuantityModel<WeightUnit>(1, null)
         );
     }
     @Test
     void testWeightVsLength() {
 
-        Quantity<WeightUnit> weight =
-                new Quantity<WeightUnit>(1, WeightUnit.KILOGRAM);
+        QuantityModel<WeightUnit> weight =
+                new QuantityModel<WeightUnit>(1, WeightUnit.KILOGRAM);
 
-        Quantity<LengthUnit> length =
-                new Quantity<LengthUnit>(1, LengthUnit.FEET);
+        QuantityModel<LengthUnit> length =
+                new QuantityModel<LengthUnit>(1, LengthUnit.FEET);
 
         assertFalse(weight.equals(length));
     }
     @Test
     void testAddition_TargetUnit_Gram() {
 
-        Quantity<WeightUnit> result =
-                new Quantity<WeightUnit>(1, WeightUnit.KILOGRAM)
+        QuantityModel<WeightUnit> result =
+                new QuantityModel<WeightUnit>(1, WeightUnit.KILOGRAM)
                         .add(
-                                new Quantity<WeightUnit>(1000, WeightUnit.GRAM),
+                                new QuantityModel<WeightUnit>(1000, WeightUnit.GRAM),
                                 WeightUnit.GRAM
                         );
 
@@ -173,10 +173,10 @@ public class QuantityMeasurementAppTest {
     @Test
     void testAddition_KgPlusGram() {
 
-        Quantity<WeightUnit> result =
-                new Quantity<WeightUnit>(1, WeightUnit.KILOGRAM)
+        QuantityModel<WeightUnit> result =
+                new QuantityModel<WeightUnit>(1, WeightUnit.KILOGRAM)
                         .add(
-                                new Quantity<WeightUnit>(1000, WeightUnit.GRAM)
+                                new QuantityModel<WeightUnit>(1000, WeightUnit.GRAM)
                         );
 
         assertEquals(
@@ -188,8 +188,8 @@ public class QuantityMeasurementAppTest {
     @Test
     void testConversion_PoundToKilogram() {
 
-        Quantity<WeightUnit> result =
-                new Quantity<WeightUnit>(2.20462, WeightUnit.POUND)
+        QuantityModel<WeightUnit> result =
+                new QuantityModel<WeightUnit>(2.20462, WeightUnit.POUND)
                         .convertTo(WeightUnit.KILOGRAM);
 
         assertEquals(
@@ -201,24 +201,24 @@ public class QuantityMeasurementAppTest {
     @Test
     void testEquality_KgToGram() {
         assertTrue(
-                new Quantity<WeightUnit>(1, WeightUnit.KILOGRAM)
+                new QuantityModel<WeightUnit>(1, WeightUnit.KILOGRAM)
                         .equals(
-                                new Quantity<WeightUnit>(1000, WeightUnit.GRAM)
+                                new QuantityModel<WeightUnit>(1000, WeightUnit.GRAM)
                         ));
     }
     @Test
     void testAddition_ExplicitTargetUnit_Commutativity() {
 
-        Quantity<LengthUnit> first =
-                new Quantity<LengthUnit>(1, LengthUnit.FEET);
+        QuantityModel<LengthUnit> first =
+                new QuantityModel<LengthUnit>(1, LengthUnit.FEET);
 
-        Quantity<LengthUnit> second =
-                new Quantity<LengthUnit>(12, LengthUnit.INCHES);
+        QuantityModel<LengthUnit> second =
+                new QuantityModel<LengthUnit>(12, LengthUnit.INCHES);
 
-        Quantity<LengthUnit> result1 =
+        QuantityModel<LengthUnit> result1 =
                 first.add(second, LengthUnit.YARDS);
 
-        Quantity<LengthUnit> result2 =
+        QuantityModel<LengthUnit> result2 =
                 second.add(first, LengthUnit.YARDS);
 
         assertEquals(result1, result2);
@@ -226,91 +226,91 @@ public class QuantityMeasurementAppTest {
     @Test
     void testAddition_ExplicitTargetUnit_Inches() {
 
-        Quantity<LengthUnit> first =
-                new Quantity<LengthUnit>(1, LengthUnit.FEET);
+        QuantityModel<LengthUnit> first =
+                new QuantityModel<LengthUnit>(1, LengthUnit.FEET);
 
-        Quantity<LengthUnit> second =
-                new Quantity<LengthUnit>(12, LengthUnit.INCHES);
+        QuantityModel<LengthUnit> second =
+                new QuantityModel<LengthUnit>(12, LengthUnit.INCHES);
 
-        Quantity<LengthUnit> result =
+        QuantityModel<LengthUnit> result =
                 first.add(second, LengthUnit.INCHES);
 
         assertEquals(
-                new Quantity<LengthUnit>(24, LengthUnit.INCHES),
+                new QuantityModel<LengthUnit>(24, LengthUnit.INCHES),
                 result);
     }
     @Test
     void testAddition_ExplicitTargetUnit_Feet() {
 
-        Quantity<LengthUnit> first =
-                new Quantity<LengthUnit>(1, LengthUnit.FEET);
+        QuantityModel<LengthUnit> first =
+                new QuantityModel<LengthUnit>(1, LengthUnit.FEET);
 
-        Quantity<LengthUnit> second =
-                new Quantity<LengthUnit>(12, LengthUnit.INCHES);
+        QuantityModel<LengthUnit> second =
+                new QuantityModel<LengthUnit>(12, LengthUnit.INCHES);
 
-        Quantity<LengthUnit> result =
+        QuantityModel<LengthUnit> result =
                 first.add(second, LengthUnit.FEET);
 
         assertEquals(
-                new Quantity<LengthUnit>(2, LengthUnit.FEET),
+                new QuantityModel<LengthUnit>(2, LengthUnit.FEET),
                 result);
     }
     @Test
     void testAddition_SameUnit_FeetPlusFeet()
     {
-        Quantity<LengthUnit> first = new Quantity<LengthUnit>(1, LengthUnit.FEET);
-        Quantity<LengthUnit> second = new Quantity<LengthUnit>(2, LengthUnit.FEET);
-        assertEquals( new Quantity<LengthUnit>(3, LengthUnit.FEET), first.add(second) );
+        QuantityModel<LengthUnit> first = new QuantityModel<LengthUnit>(1, LengthUnit.FEET);
+        QuantityModel<LengthUnit> second = new QuantityModel<LengthUnit>(2, LengthUnit.FEET);
+        assertEquals( new QuantityModel<LengthUnit>(3, LengthUnit.FEET), first.add(second) );
     }
 
     @Test
     void testAddition_SameUnit_InchPlusInch()
     {
-        Quantity<LengthUnit> first = new Quantity<LengthUnit>(6, LengthUnit.INCHES);
-        Quantity<LengthUnit> second = new Quantity<LengthUnit>(6, LengthUnit.INCHES);
-        assertEquals( new Quantity<LengthUnit>(12, LengthUnit.INCHES), first.add(second) );
+        QuantityModel<LengthUnit> first = new QuantityModel<LengthUnit>(6, LengthUnit.INCHES);
+        QuantityModel<LengthUnit> second = new QuantityModel<LengthUnit>(6, LengthUnit.INCHES);
+        assertEquals( new QuantityModel<LengthUnit>(12, LengthUnit.INCHES), first.add(second) );
     }
     @Test
     void testAddition_CrossUnit_FeetPlusInches()
     {
-        Quantity<LengthUnit> feet = new Quantity<LengthUnit>(1, LengthUnit.FEET);
-        Quantity<LengthUnit> inches = new Quantity<LengthUnit>(12, LengthUnit.INCHES);
-        assertEquals( new Quantity<LengthUnit>(2, LengthUnit.FEET), feet.add(inches) );
+        QuantityModel<LengthUnit> feet = new QuantityModel<LengthUnit>(1, LengthUnit.FEET);
+        QuantityModel<LengthUnit> inches = new QuantityModel<LengthUnit>(12, LengthUnit.INCHES);
+        assertEquals( new QuantityModel<LengthUnit>(2, LengthUnit.FEET), feet.add(inches) );
     }
     @Test
     void testAddition_CrossUnit_InchPlusFeet()
     {
-        Quantity<LengthUnit> inches = new Quantity<LengthUnit>(12, LengthUnit.INCHES);
-        Quantity<LengthUnit> feet = new Quantity<LengthUnit>(1, LengthUnit.FEET);
-        assertEquals( new Quantity<LengthUnit>(24, LengthUnit.INCHES), inches.add(feet) );
+        QuantityModel<LengthUnit> inches = new QuantityModel<LengthUnit>(12, LengthUnit.INCHES);
+        QuantityModel<LengthUnit> feet = new QuantityModel<LengthUnit>(1, LengthUnit.FEET);
+        assertEquals( new QuantityModel<LengthUnit>(24, LengthUnit.INCHES), inches.add(feet) );
     }
     @Test
     void testAddition_CrossUnit_YardPlusFeet()
     {
-        Quantity<LengthUnit> yard = new Quantity<LengthUnit>(1, LengthUnit.YARDS);
-        Quantity<LengthUnit> feet = new Quantity<LengthUnit>(3, LengthUnit.FEET);
-        assertEquals( new Quantity<LengthUnit>(2, LengthUnit.YARDS), yard.add(feet) );
+        QuantityModel<LengthUnit> yard = new QuantityModel<LengthUnit>(1, LengthUnit.YARDS);
+        QuantityModel<LengthUnit> feet = new QuantityModel<LengthUnit>(3, LengthUnit.FEET);
+        assertEquals( new QuantityModel<LengthUnit>(2, LengthUnit.YARDS), yard.add(feet) );
     }
     @Test
     void testAddition_CrossUnit_CentimeterPlusInch()
     {
-        Quantity<LengthUnit> cm = new Quantity<LengthUnit>(2.54, LengthUnit.CENTIMETERS);
-        Quantity<LengthUnit> inch = new Quantity<LengthUnit>(1, LengthUnit.INCHES);
-        Quantity<LengthUnit> result = cm.add(inch);
+        QuantityModel<LengthUnit> cm = new QuantityModel<LengthUnit>(2.54, LengthUnit.CENTIMETERS);
+        QuantityModel<LengthUnit> inch = new QuantityModel<LengthUnit>(1, LengthUnit.INCHES);
+        QuantityModel<LengthUnit> result = cm.add(inch);
         assertEquals( 5.08, result.getValue(), 0.001 );
     }
 
     @Test
     void testAddition_Commutativity() {
 
-        Quantity<LengthUnit> feet =
-                new Quantity<LengthUnit>(1, LengthUnit.FEET);
+        QuantityModel<LengthUnit> feet =
+                new QuantityModel<LengthUnit>(1, LengthUnit.FEET);
 
-        Quantity<LengthUnit> inches =
-                new Quantity<LengthUnit>(12, LengthUnit.INCHES);
+        QuantityModel<LengthUnit> inches =
+                new QuantityModel<LengthUnit>(12, LengthUnit.INCHES);
 
-        Quantity<LengthUnit> result1 = feet.add(inches);
-        Quantity<LengthUnit> result2 = inches.add(feet);
+        QuantityModel<LengthUnit> result1 = feet.add(inches);
+        QuantityModel<LengthUnit> result2 = inches.add(feet);
 
         assertTrue(
                 result1.equals(result2)
@@ -319,44 +319,44 @@ public class QuantityMeasurementAppTest {
     @Test
     void testAddition_WithZero()
     {
-        Quantity<LengthUnit> feet = new Quantity<LengthUnit>(5, LengthUnit.FEET);
-        Quantity<LengthUnit> zero = new Quantity<LengthUnit>(0, LengthUnit.INCHES);
+        QuantityModel<LengthUnit> feet = new QuantityModel<LengthUnit>(5, LengthUnit.FEET);
+        QuantityModel<LengthUnit> zero = new QuantityModel<LengthUnit>(0, LengthUnit.INCHES);
         assertEquals( feet, feet.add(zero) );
     }
     @Test
     void testAddition_NegativeValues()
     {
-        Quantity<LengthUnit> first = new Quantity<LengthUnit>(5, LengthUnit.FEET);
-        Quantity<LengthUnit> second = new Quantity<LengthUnit>(-2, LengthUnit.FEET);
-        assertEquals( new Quantity<LengthUnit>(3, LengthUnit.FEET), first.add(second) );
+        QuantityModel<LengthUnit> first = new QuantityModel<LengthUnit>(5, LengthUnit.FEET);
+        QuantityModel<LengthUnit> second = new QuantityModel<LengthUnit>(-2, LengthUnit.FEET);
+        assertEquals( new QuantityModel<LengthUnit>(3, LengthUnit.FEET), first.add(second) );
     }
     @Test
     void testAddition_NullOperand()
     {
-        Quantity<LengthUnit> first = new Quantity<LengthUnit>(1, LengthUnit.FEET);
+        QuantityModel<LengthUnit> first = new QuantityModel<LengthUnit>(1, LengthUnit.FEET);
         assertThrows( IllegalArgumentException.class, () -> first.add(null) );
     }
     @Test
     void testAddition_LargeValues()
     {
-        Quantity<LengthUnit> first = new Quantity<LengthUnit>(1_000_000, LengthUnit.FEET);
-        Quantity<LengthUnit> second = new Quantity<LengthUnit>(1_000_000, LengthUnit.FEET);
-        assertEquals( new Quantity<LengthUnit>(2_000_000, LengthUnit.FEET), first.add(second) );
+        QuantityModel<LengthUnit> first = new QuantityModel<LengthUnit>(1_000_000, LengthUnit.FEET);
+        QuantityModel<LengthUnit> second = new QuantityModel<LengthUnit>(1_000_000, LengthUnit.FEET);
+        assertEquals( new QuantityModel<LengthUnit>(2_000_000, LengthUnit.FEET), first.add(second) );
     }
 
     @Test
     void testAddition_SameReference()
     {
-        Quantity<LengthUnit> feet = new Quantity<LengthUnit>(2, LengthUnit.FEET);
-        assertEquals( new Quantity<LengthUnit>(4, LengthUnit.FEET), feet.add(feet) );
+        QuantityModel<LengthUnit> feet = new QuantityModel<>(2, LengthUnit.FEET);
+        assertEquals( new QuantityModel<LengthUnit>(4, LengthUnit.FEET), feet.add(feet) );
     }
     @Test
     void testAddition_OriginalObjectsRemainUnchanged()
     {
-        Quantity<LengthUnit> first = new Quantity<LengthUnit>(1, LengthUnit.FEET);
-        Quantity<LengthUnit> second = new Quantity<LengthUnit>(12, LengthUnit.INCHES);
-        first.add(second); assertEquals( new Quantity<LengthUnit>(1, LengthUnit.FEET), first );
-        assertEquals( new Quantity<LengthUnit>(12, LengthUnit.INCHES), second );
+        QuantityModel<LengthUnit> first = new QuantityModel<LengthUnit>(1, LengthUnit.FEET);
+        QuantityModel<LengthUnit> second = new QuantityModel<LengthUnit>(12, LengthUnit.INCHES);
+        first.add(second); assertEquals( new QuantityModel<>(1, LengthUnit.FEET), first );
+        assertEquals( new QuantityModel<>(12, LengthUnit.INCHES), second );
     }
 
 }
