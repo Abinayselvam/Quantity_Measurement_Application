@@ -4,7 +4,7 @@ import org.example.project.dto.QuantityDTO;
 import org.example.project.entities.QuantityMeasurementEntity;
 import org.example.project.exception.QuantityMeasurementException;
 import org.example.project.repository.IQuantityMeasurementRepository;
-import static org.example.project.mapper.QuantityMapper.getMeasurableUnit;
+import static org.example.project.utils.QuantityMapper.getMeasurableUnit;
 
 public class QuantityMeasurementServiceImpl
         implements IQuantityMeasurementService {
