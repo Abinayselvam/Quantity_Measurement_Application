@@ -1,15 +1,15 @@
-package org.example.project.entities;
+package org.example.project.model;
 import org.example.project.Enums.ArithmeticOperation;
 import org.example.project.Interface.IMeasurable;
 import java.util.Objects;
 
-public final class Quantity<U extends IMeasurable> {
+public final class QuantityModel<U extends IMeasurable> {
 
     private static final double EPSILON = 0.000001;
     private final double value;
     private final U unit;
 
-    public Quantity(double value, U unit) {
+    public QuantityModel(double value, U unit) {
 
         if (unit == null) {
             throw new IllegalArgumentException("Unit cannot be null");
@@ -31,7 +31,7 @@ public final class Quantity<U extends IMeasurable> {
         return unit;
     }
 
-    public Quantity<U> convertTo(U targetUnit) {
+    public QuantityModel<U> convertTo(U targetUnit) {
 
         if (targetUnit == null) {
             throw new IllegalArgumentException(
@@ -51,7 +51,7 @@ public final class Quantity<U extends IMeasurable> {
         double convertedValue =
                 targetUnit.convertFromBaseUnit(baseValue);
 
-        return new Quantity<>(
+        return new QuantityModel<>(
                 round(convertedValue),
                 targetUnit
         );
@@ -62,7 +62,7 @@ public final class Quantity<U extends IMeasurable> {
     }
 
     private void validateArithmeticOperands(
-            Quantity<U> other,
+            QuantityModel<U> other,
             U targetUnit,
             boolean targetUnitRequired) {
 
@@ -90,7 +90,7 @@ public final class Quantity<U extends IMeasurable> {
         }
     }
     private double performBaseArithmetic(
-            Quantity<U> other,
+            QuantityModel<U> other,
             ArithmeticOperation operation) {
 
         unit.validateOperationSupport(
@@ -110,7 +110,7 @@ public final class Quantity<U extends IMeasurable> {
                 thisBase,
                 otherBase);
     }
-    public Quantity<U> add(Quantity<U> other) {
+    public QuantityModel<U> add(QuantityModel<U> other) {
 
         validateArithmeticOperands(
                 other,
@@ -125,12 +125,12 @@ public final class Quantity<U extends IMeasurable> {
         double result =
                 unit.convertFromBaseUnit(resultBase);
 
-        return new Quantity<>(
+        return new QuantityModel<>(
                 round(result),
                 unit);
     }
-    public Quantity<U> add(
-            Quantity<U> other,
+    public QuantityModel<U> add(
+            QuantityModel<U> other,
             U targetUnit) {
 
         validateArithmeticOperands(
@@ -146,12 +146,12 @@ public final class Quantity<U extends IMeasurable> {
         double result =
                 targetUnit.convertFromBaseUnit(resultBase);
 
-        return new Quantity<>(
+        return new QuantityModel<>(
                 round(result),
                 targetUnit);
     }
-    public Quantity<U> subtract(
-            Quantity<U> other,
+    public QuantityModel<U> subtract(
+            QuantityModel<U> other,
             U targetUnit) {
 
         validateArithmeticOperands(
@@ -167,12 +167,12 @@ public final class Quantity<U extends IMeasurable> {
         double result =
                 targetUnit.convertFromBaseUnit(resultBase);
 
-        return new Quantity<>(
+        return new QuantityModel<>(
                 round(result),
                 targetUnit);
     }
     public double divide(
-            Quantity<U> other) {
+            QuantityModel<U> other) {
 
         validateArithmeticOperands(
                 other,
@@ -190,7 +190,7 @@ public final class Quantity<U extends IMeasurable> {
             return true;
         }
 
-        if (!(obj instanceof Quantity<?> other)) {
+        if (!(obj instanceof QuantityModel<?> other)) {
             return false;
         }
 

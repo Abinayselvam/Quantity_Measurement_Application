@@ -1,13 +1,13 @@
 package org.example.project.utils;
 import org.example.project.Interface.IMeasurable;
-import org.example.project.entities.Quantity;
+import org.example.project.model.QuantityModel;
 
 public class QuantityMeasurementApp {
 
     public static <U extends IMeasurable>
     void demonstrateEquality(
-            Quantity<U> q1,
-            Quantity<U> q2) {
+            QuantityModel<U> q1,
+            QuantityModel<U> q2) {
 
         System.out.println(q1 + " equals " + q2
                 + " => " + q1.equals(q2));
@@ -15,7 +15,7 @@ public class QuantityMeasurementApp {
 
     public static <U extends IMeasurable>
     void demonstrateConversion(
-            Quantity<U> quantity,
+            QuantityModel<U> quantity,
             U targetUnit) {
 
         System.out.println(
@@ -25,8 +25,8 @@ public class QuantityMeasurementApp {
 
     public static <U extends IMeasurable>
     void demonstrateAddition(
-            Quantity<U> q1,
-            Quantity<U> q2,
+            QuantityModel<U> q1,
+            QuantityModel<U> q2,
             U targetUnit) {
 
         System.out.println(
@@ -36,8 +36,8 @@ public class QuantityMeasurementApp {
     }
     public static <U extends IMeasurable>
     void demonstrateSubtraction(
-            Quantity<U> q1,
-            Quantity<U> q2,
+            QuantityModel<U> q1,
+            QuantityModel<U> q2,
             U targetUnit) {
 
         System.out.println(
@@ -45,8 +45,8 @@ public class QuantityMeasurementApp {
     }
     public static <U extends IMeasurable>
     void demonstrateDivision(
-            Quantity<U> q1,
-            Quantity<U> q2) {
+            QuantityModel<U> q1,
+            QuantityModel<U> q2) {
 
         System.out.println(
                 q1.divide(q2));
