@@ -30,7 +30,12 @@ public enum VolumeUnit implements IMeasurable {
     }
 
     @Override
-    public String getUnitName() {
-        return name();
+    public String getMeasurementType() {
+        return "LENGTH";
+    }
+
+    @Override
+    public IMeasurable getUnitByName(String unitName) {
+        return LengthUnit.valueOf(unitName.toUpperCase());
     }
 }

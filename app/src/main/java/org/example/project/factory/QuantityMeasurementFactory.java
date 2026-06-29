@@ -2,27 +2,27 @@ package org.example.project.factory;
 
 import org.example.project.controller.QuantityMeasurementController;
 import org.example.project.repository.IQuantityMeasurementRepository;
-import org.example.project.repository.QuantityMeasurementCacheRepository;
+import org.example.project.repository.QuantityMeasurementJDBCRepository;
 import org.example.project.service.IQuantityMeasurementService;
 import org.example.project.service.QuantityMeasurementServiceImpl;
+import org.example.project.utils.DBInitializer;
 
 public class QuantityMeasurementFactory {
 
-    private QuantityMeasurementFactory() {
-    }
+    public static QuantityMeasurementController createController() {
 
-    public static QuantityMeasurementController
-    createController() {
+        // Step 1 - Create Database
+        DBInitializer.initialize();
 
+        // Step 2 - Create Repository
         IQuantityMeasurementRepository repository =
-                QuantityMeasurementCacheRepository
-                        .getInstance();
+                new QuantityMeasurementJDBCRepository();
 
+        // Step 3 - Create Service
         IQuantityMeasurementService service =
-                new QuantityMeasurementServiceImpl(
-                        repository);
+                new QuantityMeasurementServiceImpl(repository);
 
-        return new QuantityMeasurementController(
-                service);
+        // Step 4 - Create Controller
+        return new QuantityMeasurementController(service);
     }
 }

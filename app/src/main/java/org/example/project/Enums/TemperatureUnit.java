@@ -58,8 +58,13 @@ public enum TemperatureUnit implements IMeasurable {
     }
 
     @Override
-    public String getUnitName() {
-        return unitName;
+    public String getMeasurementType() {
+        return "LENGTH";
+    }
+
+    @Override
+    public IMeasurable getUnitByName(String unitName) {
+        return LengthUnit.valueOf(unitName.toUpperCase());
     }
     @Override
     public boolean supportsArithmetic() {

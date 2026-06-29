@@ -4,7 +4,6 @@ import org.example.project.dto.QuantityDTO;
 import org.example.project.entities.QuantityMeasurementEntity;
 import org.example.project.exception.QuantityMeasurementException;
 import org.example.project.repository.IQuantityMeasurementRepository;
-import static org.example.project.utils.QuantityMapper.getMeasurableUnit;
 
 public class QuantityMeasurementServiceImpl
         implements IQuantityMeasurementService {
@@ -26,10 +25,10 @@ public class QuantityMeasurementServiceImpl
         try {
 
             IMeasurable unit1 =
-                     getMeasurableUnit(first);
+                    first.getUnit();
 
             IMeasurable unit2 =
-                    getMeasurableUnit(second);
+                    second.getUnit();
 
             double value1 =
                     unit1.convertToBaseUnit(
@@ -73,10 +72,10 @@ public class QuantityMeasurementServiceImpl
             String targetUnit) {
 
         IMeasurable unit1 =
-                getMeasurableUnit(first);
+                first.getUnit();
 
         IMeasurable unit2 =
-                getMeasurableUnit(second);
+                second.getUnit();
 
         if (!unit1.supportsArithmetic()) {
 
@@ -103,10 +102,10 @@ public class QuantityMeasurementServiceImpl
             QuantityDTO second,
             String targetUnit) {
         IMeasurable unit1 =
-                getMeasurableUnit(first);
+                first.getUnit();
 
         IMeasurable unit2 =
-                getMeasurableUnit(second);
+               second.getUnit();
 
         if (!unit1.supportsArithmetic()) {
 
@@ -133,10 +132,10 @@ public class QuantityMeasurementServiceImpl
             QuantityDTO first,
             QuantityDTO second) {
         IMeasurable unit1 =
-                getMeasurableUnit(first);
+                first.getUnit();
 
         IMeasurable unit2 =
-                getMeasurableUnit(second);
+                second.getUnit();
 
         if (!unit1.supportsArithmetic()) {
 

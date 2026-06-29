@@ -1,9 +1,11 @@
 package org.example.project.dto;
 
+import org.example.project.Interface.IMeasurable;
+
 public class QuantityDTO {
 
     private double value;
-    private String unit;
+    private IMeasurable unit;
     private String measurementType;
 
     public QuantityDTO() {
@@ -11,7 +13,7 @@ public class QuantityDTO {
 
     public QuantityDTO(
             double value,
-            String unit,
+           IMeasurable  unit,
             String measurementType) {
 
         this.value = value;
@@ -23,7 +25,7 @@ public class QuantityDTO {
         return value;
     }
 
-    public String getUnit() {
+    public IMeasurable getUnit() {
         return unit;
     }
 
@@ -35,7 +37,7 @@ public class QuantityDTO {
         this.value = value;
     }
 
-    public void setUnit(String unit) {
+    public void setUnit(IMeasurable unit) {
         this.unit = unit;
     }
 

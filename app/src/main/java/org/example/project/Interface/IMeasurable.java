@@ -7,8 +7,9 @@ public interface IMeasurable {
     double convertToBaseUnit(double value);
 
     double convertFromBaseUnit(double baseValue);
+    String getMeasurementType();
 
-    String getUnitName();
+    IMeasurable getUnitByName(String unitName);
 
     SupportsArithmetic supportsArithmetic = () -> true;
 
