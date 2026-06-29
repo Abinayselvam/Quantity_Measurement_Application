@@ -3,10 +3,6 @@ import org.example.project.Enums.*;
 import org.example.project.controller.QuantityMeasurementController;
 import org.example.project.dto.QuantityDTO;
 import org.example.project.factory.QuantityMeasurementFactory;
-import org.example.project.repository.IQuantityMeasurementRepository;
-import org.example.project.repository.QuantityMeasurementCacheRepository;
-import org.example.project.service.IQuantityMeasurementService;
-import org.example.project.service.QuantityMeasurementServiceImpl;
 
 import java.util.Scanner;
 
@@ -22,13 +18,13 @@ public class Main {
         QuantityDTO length1 =
                 new QuantityDTO(
                         1,
-                        "FEET",
+                        LengthUnit.FEET,
                         "LENGTH");
 
         QuantityDTO length2 =
                 new QuantityDTO(
                         12,
-                        "INCHES",
+                        LengthUnit.INCHES,
                         "LENGTH");
 
         controller.performEqualityCheck(
@@ -37,13 +33,13 @@ public class Main {
         QuantityDTO feet =
                 new QuantityDTO(
                         1,
-                        "FEET",
+                        LengthUnit.FEET,
                         "LENGTH");
 
         QuantityDTO inches =
                 new QuantityDTO(
                         12,
-                        "INCHES",
+                        LengthUnit.INCHES,
                         "LENGTH");
 
         controller.performEqualityCheck(
@@ -52,13 +48,13 @@ public class Main {
         QuantityDTO celsius =
                 new QuantityDTO(
                         0,
-                        "CELSIUS",
+                        TemperatureUnit.CELSIUS,
                         "TEMPERATURE");
 
         QuantityDTO fahrenheit =
                 new QuantityDTO(
                         32,
-                        "FAHRENHEIT",
+                        TemperatureUnit.FAHRENHEIT,
                         "TEMPERATURE");
 
         controller.performEqualityCheck(

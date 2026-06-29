@@ -29,6 +29,18 @@ public class QuantityMeasurementEntity
         this.error = false;
         this.errorMessage = null;
     }
+    public QuantityMeasurementEntity(
+            String operation,
+            String operand1,
+            String result) {
+
+        this.operation = operation;
+        this.operand1 = operand1;
+        this.operand2 = null;
+        this.result = result;
+        this.error = false;
+        this.errorMessage = null;
+    }
 
     // Error operation
     public QuantityMeasurementEntity(
