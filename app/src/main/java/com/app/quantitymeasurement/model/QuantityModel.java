@@ -1,0 +1,164 @@
+package com.app.quantitymeasurement.model;
+
+import com.app.quantitymeasurement.Enums.ArithmeticOperation;
+import com.app.quantitymeasurement.Interface.IMeasurable;
+
+import java.util.Objects;
+
+public final class QuantityModel<U extends IMeasurable> {
+
+    private static final double EPSILON = 0.000001;
+    private final double value;
+    private final U unit;
+
+    public QuantityModel(double value, U unit) {
+
+        if (unit == null) {
+            throw new IllegalArgumentException("Unit cannot be null");
+        }
+
+        if (!Double.isFinite(value)) {
+            throw new IllegalArgumentException("Value must be finite");
+        }
+
+        this.value = value;
+        this.unit = unit;
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    public U getUnit() {
+        return unit;
+    }
+
+    public QuantityModel<U> convertTo(U targetUnit) {
+
+        if (targetUnit == null) {
+            throw new IllegalArgumentException("Target unit cannot be null");
+        }
+
+        if (!unit.getClass().equals(targetUnit.getClass())) {
+            throw new IllegalArgumentException(
+                    "Cannot convert between different measurement categories");
+        }
+
+        double baseValue = unit.convertToBaseUnit(value);
+        double convertedValue = targetUnit.convertFromBaseUnit(baseValue);
+
+        return new QuantityModel<>(round(convertedValue), targetUnit);
+    }
+
+    private double round(double value) {
+        return Math.round(value * 100.0) / 100.0;
+    }
+
+    private void validateArithmeticOperands(QuantityModel<U> other, U targetUnit, boolean targetUnitRequired) {
+
+        if (other == null) {
+            throw new IllegalArgumentException("Quantity cannot be null");
+        }
+
+        if (unit == null || other.unit == null) {
+            throw new IllegalArgumentException("Unit cannot be null");
+        }
+
+        if (!unit.getClass().equals(other.unit.getClass())) {
+            throw new IllegalArgumentException(
+                    "Cannot perform arithmetic between different measurement categories: "
+                            + unit.getMeasurementType() + " and " + other.unit.getMeasurementType());
+        }
+
+        if (!Double.isFinite(value) || !Double.isFinite(other.value)) {
+            throw new IllegalArgumentException("Values must be finite numbers");
+        }
+
+        if (targetUnitRequired && targetUnit == null) {
+            throw new IllegalArgumentException("Target unit cannot be null");
+        }
+    }
+
+    private double performBaseArithmetic(QuantityModel<U> other, ArithmeticOperation operation) {
+
+        unit.validateOperationSupport(operation.name());
+        other.unit.validateOperationSupport(operation.name());
+
+        double thisBase = unit.convertToBaseUnit(value);
+        double otherBase = other.unit.convertToBaseUnit(other.value);
+
+        return operation.compute(thisBase, otherBase);
+    }
+
+    public QuantityModel<U> add(QuantityModel<U> other) {
+        validateArithmeticOperands(other, unit, true);
+        double resultBase = performBaseArithmetic(other, ArithmeticOperation.ADD);
+        double result = unit.convertFromBaseUnit(resultBase);
+        return new QuantityModel<>(round(result), unit);
+    }
+
+    public QuantityModel<U> add(QuantityModel<U> other, U targetUnit) {
+        validateArithmeticOperands(other, targetUnit, true);
+        double resultBase = performBaseArithmetic(other, ArithmeticOperation.ADD);
+        double result = targetUnit.convertFromBaseUnit(resultBase);
+        return new QuantityModel<>(round(result), targetUnit);
+    }
+
+    public QuantityModel<U> subtract(QuantityModel<U> other, U targetUnit) {
+        validateArithmeticOperands(other, targetUnit, true);
+        double resultBase = performBaseArithmetic(other, ArithmeticOperation.SUBTRACT);
+        double result = targetUnit.convertFromBaseUnit(resultBase);
+        return new QuantityModel<>(round(result), targetUnit);
+    }
+
+    public double divide(QuantityModel<U> other) {
+        validateArithmeticOperands(other, null, false);
+        return performBaseArithmetic(other, ArithmeticOperation.DIVIDE);
+    }
+
+    public boolean isEqualTo(QuantityModel<U> other) {
+        if (other == null) {
+            throw new IllegalArgumentException("Quantity cannot be null");
+        }
+        if (!unit.getClass().equals(other.unit.getClass())) {
+            throw new IllegalArgumentException(
+                    "Cannot compare different measurement categories: "
+                            + unit.getMeasurementType() + " and " + other.unit.getMeasurementType());
+        }
+        double thisBase = unit.convertToBaseUnit(value);
+        double otherBase = other.unit.convertToBaseUnit(other.value);
+        return Math.abs(thisBase - otherBase) < EPSILON;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof QuantityModel<?> other)) {
+            return false;
+        }
+
+        if (!this.unit.getClass().equals(other.unit.getClass())) {
+            return false;
+        }
+
+        double thisBase = this.unit.convertToBaseUnit(this.value);
+        double otherBase = other.unit.convertToBaseUnit(other.value);
+
+        return Math.abs(thisBase - otherBase) < EPSILON;
+    }
+
+    @Override
+    public int hashCode() {
+        double baseValue = unit.convertToBaseUnit(value);
+        return Objects.hash(unit.getClass(), Math.round(baseValue / EPSILON));
+    }
+
+    @Override
+    public String toString() {
+        return "Quantity(" + value + ", " + unit + ")";
+    }
+}
